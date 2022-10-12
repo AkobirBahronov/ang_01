@@ -5,5 +5,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  isRed: boolean = false;
+  width: number = 300;
+  height: number = 300;
 }

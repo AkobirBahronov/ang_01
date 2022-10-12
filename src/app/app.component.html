@@ -1,7 +1,5 @@
-<div [ngClass]="'container'">
-    <div [ngClass]="'box ' + (isRed ? 'red' : '')">
-    </div>
-    <div [ngStyle]="{'backgroundColor': isRed ? 'red' : 'green', width: '100px', height: '100px', margin: '10px'}">
+<div>
+    <div [ngClass]="'box'" [ngStyle]="{width: width + 'px', height: height + 'px'}">
     </div>
 </div>
-<button type="button" (click)="isRed=!isRed">Change Color</button>
+<button type="button" (click)="width=500; height=500">Increase the Size</button>
