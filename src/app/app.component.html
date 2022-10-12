@@ -1,5 +1,16 @@
-<input [value]="value1" (input)="onInput($event)">
-<input [ngModel]="value2" (ngModelChange)="value2 = $event">
-<input #input3>
+<div>
+    <input #input>
+    <button type="button" (click)="onClick(input.value)">Add to the List</button>
+</div>
+<div>
+    <label for="checkbox">Show the List: </label>
+    <input id='checkbox' type='checkbox' [ngModel]="showList" (ngModelChange)="showList = $event">
+</div>
 
-<button type="button" (click)="onClick(input3.value)">Click</button>
+<div class='list'>
+    <ul *ngFor="let item of list; index as i; first as isFirst">
+        <li *ngIf="showList">
+            {{item}}
+        </li>
+    </ul>
+</div>
