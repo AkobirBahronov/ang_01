@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  value: string = '';
-  onKey(event: any) {
-    this.value = event.target.value;
+  value1: string = '';
+  value2: string = '';
+  onInput(event: any) {
+    this.value1 = event.target.value;
   }
 }

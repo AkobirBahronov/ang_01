@@ -1,2 +1,6 @@
-<input [value]="value" (keyup)="onKey($event)">
-<span>{{value}}</span>
+<p>First input: </p>
+<input [value]="value1" (input)="onInput($event)">
+<span> value 1: {{value1}}</span>
+<p>Second input: </p>
+<input [ngModel]="value2" (ngModelChange)="value2 = $event">
+<span> value 2: {{value2}}</span>
