@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+}
+.box {
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+  background-color: green;
+}
+
+.box.red {
+  background-color: red;
+}

@@ -5,9 +5,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  list: Array<string> = [];
-  showList: boolean = true;
-  onClick(value: string) {
-    this.list.push(value);
-  }
+  isRed: boolean = false;
 }

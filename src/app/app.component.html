@@ -1,16 +1,7 @@
-<div>
-    <input #input>
-    <button type="button" (click)="onClick(input.value)">Add to the List</button>
+<div [ngClass]="'container'">
+    <div [ngClass]="'box ' + (isRed ? 'red' : '')">
+    </div>
+    <div [ngStyle]="{'backgroundColor': isRed ? 'red' : 'green', width: '100px', height: '100px', margin: '10px'}">
+    </div>
 </div>
-<div>
-    <label for="checkbox">Show the List: </label>
-    <input id='checkbox' type='checkbox' [ngModel]="showList" (ngModelChange)="showList = $event">
-</div>
-
-<div class='list'>
-    <ul *ngFor="let item of list; index as i; first as isFirst">
-        <li *ngIf="showList">
-            {{item}}
-        </li>
-    </ul>
-</div>
+<button type="button" (click)="isRed=!isRed">Change Color</button>
