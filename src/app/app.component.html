@@ -1,2 +1,2 @@
-<my-comp [value]='myComponentValue' (onGetValueClick)="onMyComponentGetValueClick($event)">
-</my-comp>
+<my-comp [(value)]="myComponentValue"></my-comp>
+<button (click)="onMyComponentGetValueClick()">Get value</button>

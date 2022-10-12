@@ -1,22 +1,24 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'my-comp',
   templateUrl: './my-comp.component.html',
   styleUrls: ['./my-comp.component.css'],
 })
-export class MyCompComponent implements OnInit {
+export class MyCompComponent {
+  orgValue: string = '';
   @Input()
-  value: string = '';
-
-  @Output()
-  onGetValueClick: EventEmitter<string> = new EventEmitter<string>();
-
-  constructor() {}
-
-  onClick(value: string) {
-    this.onGetValueClick.emit(value);
+  get value() {
+    return this.orgValue;
   }
+  @Output()
+  valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-  ngOnInit(): void {}
+  set value(val) {
+    this.orgValue = val;
+    this.valueChange.emit(this.orgValue);
+  }
+  onClick(value: string) {
+    this.orgValue = value;
+  }
 }

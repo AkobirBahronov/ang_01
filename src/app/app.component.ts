@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   myComponentValue: string = 'test';
-  onMyComponentGetValueClick(e?: string): void {
-    alert(e);
+  onMyComponentGetValueClick(): void {
+    alert(this.myComponentValue);
   }
 }
