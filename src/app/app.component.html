@@ -1,6 +1,5 @@
-<p>First input: </p>
 <input [value]="value1" (input)="onInput($event)">
-<span> value 1: {{value1}}</span>
-<p>Second input: </p>
 <input [ngModel]="value2" (ngModelChange)="value2 = $event">
-<span> value 2: {{value2}}</span>
+<input #input3>
+
+<button type="button" (click)="onClick(input3.value)">Click</button>

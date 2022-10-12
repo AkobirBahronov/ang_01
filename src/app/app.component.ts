@@ -10,4 +10,9 @@ export class AppComponent {
   onInput(event: any) {
     this.value1 = event.target.value;
   }
+  onClick(value3: string) {
+    console.log(
+      `value1: ${this.value1}, value2: ${this.value2}, value3: ${value3}`
+    );
+  }
 }
