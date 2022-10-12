@@ -1,5 +1,2 @@
-<div>
-    <div [ngClass]="'box'" [ngStyle]="{width: width + 'px', height: height + 'px'}">
-    </div>
-</div>
-<button type="button" (click)="width=500; height=500">Increase the Size</button>
+<my-comp [value]='myComponentValue' (onGetValueClick)="onMyComponentGetValueClick($event)">
+</my-comp>
