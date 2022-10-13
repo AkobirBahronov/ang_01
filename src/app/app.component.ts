@@ -6,8 +6,10 @@ import notify from 'devextreme/ui/notify';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  myComponentValue: string = '';
+  popupValue: string = '';
+  popupVisible: boolean = false;
   onMyComponentGetValueClick(e?: string): void {
-    notify({ message: e, width: 300 }, 'success', 500);
+    this.popupValue = e || '';
+    this.popupVisible = true;
   }
 }
