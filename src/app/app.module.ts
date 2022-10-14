@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import {
   DxButtonModule,
   DxPopupModule,
+  DxSelectBoxModule,
   DxTextBoxModule,
 } from 'devextreme-angular';
 
@@ -19,6 +20,7 @@ import { PopupContentComponent } from './popup-content/popup-content.component';
     DxButtonModule,
     DxTextBoxModule,
     DxPopupModule,
+    DxSelectBoxModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

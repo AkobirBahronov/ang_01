@@ -1,12 +1,2 @@
-<div class="dx-fieldset">
-    <div class="dx-field">
-        <dx-text-box [(ngModel)]="value" [width]="500"></dx-text-box>
-    </div>
-    <dx-button text="Submit" [width]="120" (onClick)="onClick()"> </dx-button>
-</div>
-<dx-popup [width]="500" [height]="400" [(visible)]="popupVisible" [showTitle]="true" [hideOnOutsideClick]="true">
-    <div *dxTemplate="let data of 'content'">
-        <popup-content [value]="value" (onValueChange)='onValueChange($event)'>
-        </popup-content>
-    </div>
-</dx-popup>
+<dx-select-box [dataSource]="store" displayExpr="name" valueExpr="ID" searchMode="contains" searchExpr="name"
+    [searchEnabled]="true" [acceptCustomValue]="true" (onCustomItemCreating)="addCustomItem($event)"></dx-select-box>
