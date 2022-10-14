@@ -9,9 +9,10 @@ import {
 
 import { AppComponent } from './app.component';
 import { MyCompComponent } from './my-comp/my-comp.component';
+import { PopupContentComponent } from './popup-content/popup-content.component';
 
 @NgModule({
-  declarations: [AppComponent, MyCompComponent],
+  declarations: [AppComponent, MyCompComponent, PopupContentComponent],
   imports: [
     BrowserModule,
     FormsModule,
