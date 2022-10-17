@@ -1,15 +1,15 @@
-<dx-form #form [validationGroup]="'validate'">
-    <dxi-item editorType="dxTextBox" [isRequired]='true'>
-        <dxi-validation-rule type="required"></dxi-validation-rule>
-    </dxi-item>
-    <dxi-item editorType="dxTextBox">
-        <dxi-validation-rule type="custom" [reevaluate]="true" [validationCallback]="validationCheck">
+<dx-data-grid #grid (onRowUpdating)="onRowUpdating($event)" (onRowInserting)="onRowInserting($event)"
+    [dataSource]="dataSource" keyExpr="ID" [showBorders]="true">
+    <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+    </dxo-editing>
+    <dxi-column dataField="FirstName">
+        <dxi-validation-rule type="custom" [reevaluate]="true" message="FirstName is required"
+            [validationCallback]="validationCheck">
         </dxi-validation-rule>
-    </dxi-item>
-    <dxi-item dataField='checkbox' editorType="dxCheckBox"
-        [editorOptions]="{ text: 'Validate second input', value: false }">
-    </dxi-item>
-    <dxi-item editorType="dxButton"
-        [editorOptions]="{ useSubmitBehavior: true , text: 'Validate', validationGroup:'validate' }">
-    </dxi-item>
-</dx-form>
+    </dxi-column>
+    <dxi-column dataField="LastName">
+        <dxi-validation-rule type="custom" [reevaluate]="true" message="LastName is required"
+            [validationCallback]="validationCheck">
+        </dxi-validation-rule>
+    </dxi-column>
+</dx-data-grid>

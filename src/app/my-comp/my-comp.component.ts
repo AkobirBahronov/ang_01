@@ -1,25 +1,51 @@
 import { Component, ViewChild } from '@angular/core';
-import { DxFormComponent } from 'devextreme-angular';
+import { DxDataGridComponent } from 'devextreme-angular';
+import { Service, Name } from './my-comp.service';
+
 @Component({
   selector: 'my-comp',
   templateUrl: './my-comp.component.html',
   styleUrls: ['./my-comp.component.css'],
+  providers: [Service],
 })
 export class MyCompComponent {
-  @ViewChild('form', { static: false }) form: DxFormComponent;
-  constructor() {
+  @ViewChild('grid', { static: false }) dataGrid: DxDataGridComponent;
+
+  dataSource: Name[];
+
+  constructor(service: Service) {
+    this.dataSource = service.getData();
     this.validationCheck = this.validationCheck.bind(this);
   }
-  validate(e: any) {
-    e.validationGroup.validate();
+
+  onSaving(e: any) {
+    console.log(e.changes[0].data);
+    console.log(e);
   }
-  validationCheck(e: any) {
-    const checkboxValue = this.form.instance
-      .getEditor('checkbox')
-      ?.option('value');
-    if (checkboxValue) {
-      return !!e.value;
+
+  onRowUpdating(e: any) {
+    if (e.newData.FirstName === '' && e.newData.LastName === '') {
+      e.newData.FirstName = 'John';
+      e.newData.LastName = 'Doe';
     }
-    return true;
+  }
+  onRowInserting(e: any) {
+    if (
+      (!e.data.hasOwnProperty('FirstName') || !e.data.FirstName.trim()) &&
+      (!e.data.hasOwnProperty('LastName') || !e.data.LastName.trim())
+    ) {
+      e.data.FirstName = 'John';
+      e.data.LastName = 'Doe';
+    }
+  }
+
+  validationCheck(options: any) {
+    if (!options.data.FirstName && !options.data.LastName) {
+      return true;
+    }
+    if (options.data.hasOwnProperty(options.column.dataField)) {
+      return !!options.data[options.column.dataField].trim();
+    }
+    return false;
   }
 }
