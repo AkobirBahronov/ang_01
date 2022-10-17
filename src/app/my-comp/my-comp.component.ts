@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { DxDataGridComponent } from 'devextreme-angular';
+import { Component } from '@angular/core';
 import { Service, Name } from './my-comp.service';
 
 @Component({
@@ -9,18 +8,11 @@ import { Service, Name } from './my-comp.service';
   providers: [Service],
 })
 export class MyCompComponent {
-  @ViewChild('grid', { static: false }) dataGrid: DxDataGridComponent;
-
   dataSource: Name[];
 
   constructor(service: Service) {
     this.dataSource = service.getData();
     this.validationCheck = this.validationCheck.bind(this);
-  }
-
-  onSaving(e: any) {
-    console.log(e.changes[0].data);
-    console.log(e);
   }
 
   onRowUpdating(e: any) {
