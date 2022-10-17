@@ -1,16 +1,15 @@
-<dx-text-box>
-    <dx-validator>
-        <dxi-validation-rule type="required" message="Value is required"></dxi-validation-rule>
-    </dx-validator>
-</dx-text-box>
-<dx-text-box>
-    <dx-validator>
-        <dxi-validation-rule type="custom" [reevaluate]="true" message="Value is required"
-            [validationCallback]="validationCheck">
+<dx-form #form [validationGroup]="'validate'">
+    <dxi-item editorType="dxTextBox" [isRequired]='true'>
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item editorType="dxTextBox">
+        <dxi-validation-rule type="custom" [reevaluate]="true" [validationCallback]="validationCheck">
         </dxi-validation-rule>
-    </dx-validator>
-</dx-text-box>
-<dx-check-box [(ngModel)]="checkboxValue" text="Validate The Second Field">
-</dx-check-box>
-<dx-button text="Validate" (onClick)="validate($event)">
-</dx-button>
+    </dxi-item>
+    <dxi-item dataField='checkbox' editorType="dxCheckBox"
+        [editorOptions]="{ text: 'Validate second input', value: false }">
+    </dxi-item>
+    <dxi-item editorType="dxButton"
+        [editorOptions]="{ useSubmitBehavior: true , text: 'Validate', validationGroup:'validate' }">
+    </dxi-item>
+</dx-form>

@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import {
   DxButtonModule,
   DxCheckBoxModule,
+  DxFormModule,
   DxPopupModule,
   DxSelectBoxModule,
   DxTextBoxModule,
@@ -25,6 +26,7 @@ import { PopupContentComponent } from './popup-content/popup-content.component';
     DxSelectBoxModule,
     DxValidatorModule,
     DxCheckBoxModule,
+    DxFormModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
