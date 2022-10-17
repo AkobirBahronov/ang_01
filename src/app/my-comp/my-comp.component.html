@@ -1,2 +1,16 @@
-<dx-select-box [dataSource]="store" displayExpr="name" valueExpr="ID" searchMode="contains" searchExpr="name"
-    [searchEnabled]="true" [acceptCustomValue]="true" (onCustomItemCreating)="addCustomItem($event)"></dx-select-box>
+<dx-text-box>
+    <dx-validator>
+        <dxi-validation-rule type="required" message="Email is required"></dxi-validation-rule>
+    </dx-validator>
+</dx-text-box>
+<dx-text-box>
+    <dx-validator>
+        <dxi-validation-rule type="custom" [reevaluate]="true" message="Email is required"
+            [validationCallback]="validationCheck">
+        </dxi-validation-rule>
+    </dx-validator>
+</dx-text-box>
+<dx-check-box [(ngModel)]="checkboxValue" text="Validate The Second Field">
+</dx-check-box>
+<dx-button text="Validate" (onClick)="validate($event)">
+</dx-button>

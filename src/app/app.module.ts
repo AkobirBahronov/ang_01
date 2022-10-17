@@ -3,9 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import {
   DxButtonModule,
+  DxCheckBoxModule,
   DxPopupModule,
   DxSelectBoxModule,
   DxTextBoxModule,
+  DxValidatorModule,
 } from 'devextreme-angular';
 
 import { AppComponent } from './app.component';
@@ -21,6 +23,8 @@ import { PopupContentComponent } from './popup-content/popup-content.component';
     DxTextBoxModule,
     DxPopupModule,
     DxSelectBoxModule,
+    DxValidatorModule,
+    DxCheckBoxModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
