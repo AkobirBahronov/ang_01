@@ -1,15 +1,22 @@
-<dx-data-grid #grid (onRowUpdating)="onRowUpdating($event)" (onRowInserting)="onRowInserting($event)"
-    [dataSource]="dataSource" keyExpr="ID" [showBorders]="true">
-    <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
-    </dxo-editing>
-    <dxi-column dataField="FirstName">
-        <dxi-validation-rule type="custom" [reevaluate]="true" message="FirstName is required"
-            [validationCallback]="validationCheck">
-        </dxi-validation-rule>
-    </dxi-column>
-    <dxi-column dataField="LastName">
-        <dxi-validation-rule type="custom" [reevaluate]="true" message="LastName is required"
-            [validationCallback]="validationCheck">
-        </dxi-validation-rule>
-    </dxi-column>
-</dx-data-grid>
+<div id="data-grid-demo">
+    <dx-data-grid id="gridContainer" keyExpr="ID" [dataSource]="dataSource" [showBorders]="true"
+        (onEditorPreparing)="onEditorPreparing($event)">
+        <dxo-editing mode="row" [allowUpdating]="true" [allowAdding]="true">
+        </dxo-editing>
+        <dxi-column dataField="EmployeeID" caption="Employee" [setCellValue]="setEmployeeValue">
+            <dxo-lookup [dataSource]="employees" valueExpr="ID" displayExpr="Name">
+            </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="LocationID" caption="Location" [setCellValue]="setLocationValue">
+            <dxo-lookup [dataSource]="locations" valueExpr="ID" displayExpr="Name">
+            </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="OrderID" caption="Order">
+            <dxo-lookup [dataSource]="getFilteredOrders" valueExpr="ID" displayExpr="Name">
+            </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="Price"></dxi-column>
+        <dxi-column dataField="Count"></dxi-column>
+        <dxi-column caption="Total Price" [calculateCellValue]="calculateSalesAmount"></dxi-column>
+    </dx-data-grid>
+</div>

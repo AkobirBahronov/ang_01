@@ -1,119 +1,71 @@
 import { Component } from '@angular/core';
-import ArrayStore from 'devextreme/data/array_store';
-import DataSource from 'devextreme/data/data_source';
+import { Service, Data, Employee, Location, Order } from './my-comp.service';
 @Component({
   selector: 'my-comp',
   templateUrl: './my-comp.component.html',
   styleUrls: ['./my-comp.component.css'],
+  providers: [Service],
 })
 export class MyCompComponent {
-  store: ArrayStore;
-  dataSource: DataSource;
-  names = [
-    {
-      ID: 1,
-      FirstName: 'John',
-      LastName: 'Heart',
-    },
-    {
-      ID: 2,
-      FirstName: 'Olivia',
-      LastName: 'Peyton',
-    },
-    {
-      ID: 3,
-      FirstName: 'Robert',
-      LastName: 'Reagan',
-    },
-    {
-      ID: 4,
-      FirstName: 'Greta',
-      LastName: 'Sims',
-    },
-    {
-      ID: 5,
-      FirstName: 'Brett',
-      LastName: 'Wade',
-    },
-    {
-      ID: 6,
-      FirstName: 'Sandra',
-      LastName: 'Johnson',
-    },
-    {
-      ID: 7,
-      FirstName: 'Kevin',
-      LastName: 'Carter',
-    },
-    {
-      ID: 8,
-      FirstName: 'Cynthia',
-      LastName: 'Stanwick',
-    },
-    {
-      ID: 9,
-      FirstName: 'Kent',
-      LastName: 'Samuelson',
-    },
-    {
-      ID: 10,
-      FirstName: 'Taylor',
-      LastName: 'Riley',
-    },
-    {
-      ID: 11,
-      FirstName: 'Sam',
-      LastName: 'Hill',
-    },
-    {
-      ID: 12,
-      FirstName: 'Kelly',
-      LastName: 'Rodriguez',
-    },
-    {
-      ID: 13,
-      FirstName: 'Natalie',
-      LastName: 'Maguirre',
-    },
-    {
-      ID: 14,
-      FirstName: 'Walter',
-      LastName: 'Hobbs',
-    },
-  ];
-  constructor() {
-    this.dataSource = new DataSource({
-      store: new ArrayStore({
-        key: 'ID',
-        data: this.names,
-      }),
-    });
-    this.validationCheck = this.validationCheck.bind(this);
+  dataSource: Data[];
+  employees: Employee[];
+  locations: Location[];
+  orders: Order[];
+  constructor(private service: Service) {
+    this.dataSource = service.getData();
+    this.employees = service.getEmployees();
+    this.locations = service.getLocations();
+    this.orders = service.getOrders();
+
+    this.getFilteredOrders = this.getFilteredOrders.bind(this);
   }
 
-  onRowUpdating(e: any) {
-    if (e.newData.FirstName === '' && e.newData.LastName === '') {
-      e.newData.FirstName = 'John';
-      e.newData.LastName = 'Doe';
-    }
-  }
-  onRowInserting(e: any) {
-    if (
-      (!e.data.hasOwnProperty('FirstName') || !e.data.FirstName.trim()) &&
-      (!e.data.hasOwnProperty('LastName') || !e.data.LastName.trim())
-    ) {
-      e.data.FirstName = 'John';
-      e.data.LastName = 'Doe';
+  getFilteredOrders(options: any) {
+    if (options.data?.LocationID) {
+      return {
+        store: this.orders,
+        filter: options.data
+          ? [
+              ['LocationID', '=', options.data.LocationID],
+              'and',
+              ['EmployeeID', '=', options.data.EmployeeID],
+            ]
+          : null,
+      };
+    } else {
+      return {
+        store: this.orders,
+        filter: options.data
+          ? ['EmployeeID', '=', options.data.EmployeeID]
+          : null,
+      };
     }
   }
 
-  validationCheck(options: any) {
-    if (!options.data.FirstName && !options.data.LastName) {
-      return true;
+  onEditorPreparing(e: any) {
+    if (e.parentType === 'dataRow' && e.dataField === 'OrderID') {
+      e.editorOptions.disabled = typeof e.row.data.EmployeeID !== 'number';
     }
-    if (options.data.hasOwnProperty(options.column.dataField)) {
-      return !!options.data[options.column.dataField].trim();
+    if (e.parentType === 'dataRow' && e.dataField === 'LocationID') {
+      e.editorOptions.disabled = typeof e.row.data.EmployeeID !== 'number';
     }
-    return false;
+  }
+
+  setEmployeeValue(rowData: any, value: any): void {
+    rowData.LocationID = null;
+    rowData.OrderID = null;
+    (<any>this).defaultSetCellValue(rowData, value);
+  }
+
+  setLocationValue(rowData: any, value: any): void {
+    rowData.OrderID = null;
+    (<any>this).defaultSetCellValue(rowData, value);
+  }
+
+  calculateSalesAmount(rowData: any) {
+    if (!rowData.Price || !rowData.Count) {
+      return 0;
+    }
+    return rowData.Price * rowData.Count;
   }
 }
