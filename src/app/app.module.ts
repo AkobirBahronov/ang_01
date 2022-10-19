@@ -8,16 +8,17 @@ import {
   DxFormModule,
   DxPopupModule,
   DxSelectBoxModule,
+  DxTemplateModule,
   DxTextBoxModule,
   DxValidatorModule,
 } from 'devextreme-angular';
 
 import { AppComponent } from './app.component';
 import { MyCompComponent } from './my-comp/my-comp.component';
-import { PopupContentComponent } from './popup-content/popup-content.component';
+import { DetailGridComponent } from './detail-grid/detail-grid.component';
 
 @NgModule({
-  declarations: [AppComponent, MyCompComponent, PopupContentComponent],
+  declarations: [AppComponent, MyCompComponent, DetailGridComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -28,6 +29,7 @@ import { PopupContentComponent } from './popup-content/popup-content.component';
     DxValidatorModule,
     DxCheckBoxModule,
     DxFormModule,
+    DxTemplateModule,
     DxDataGridModule,
   ],
   providers: [],

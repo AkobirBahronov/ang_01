@@ -1,22 +1,12 @@
-<div id="data-grid-demo">
-    <dx-data-grid id="gridContainer" keyExpr="ID" [dataSource]="dataSource" [showBorders]="true"
-        (onEditorPreparing)="onEditorPreparing($event)">
-        <dxo-editing mode="row" [allowUpdating]="true" [allowAdding]="true">
-        </dxo-editing>
-        <dxi-column dataField="EmployeeID" caption="Employee" [setCellValue]="setEmployeeValue">
-            <dxo-lookup [dataSource]="employees" valueExpr="ID" displayExpr="Name">
-            </dxo-lookup>
-        </dxi-column>
-        <dxi-column dataField="LocationID" caption="Location" [setCellValue]="setLocationValue">
-            <dxo-lookup [dataSource]="locations" valueExpr="ID" displayExpr="Name">
-            </dxo-lookup>
-        </dxi-column>
-        <dxi-column dataField="OrderID" caption="Order">
-            <dxo-lookup [dataSource]="getFilteredOrders" valueExpr="ID" displayExpr="Name">
-            </dxo-lookup>
-        </dxi-column>
-        <dxi-column dataField="Price"></dxi-column>
-        <dxi-column dataField="Count"></dxi-column>
-        <dxi-column caption="Total Price" [calculateCellValue]="calculateSalesAmount"></dxi-column>
-    </dx-data-grid>
-</div>
+<dx-data-grid id="gridContainer" [dataSource]="masterDataSource" [showBorders]="true">
+    <dxi-column dataField="OrderID"></dxi-column>
+    <dxi-column dataField="CustomerID"></dxi-column>
+    <dxi-column dataField="OrderDate"></dxi-column>
+    <dxi-column dataField="ShipName"></dxi-column>
+    <dxi-column dataField="ShipAddress"></dxi-column>
+    <dxo-paging [pageSize]="10"> </dxo-paging>
+    <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+    <div *dxTemplate="let order of 'detail'">
+        <detail-grid [key]="order.key"></detail-grid>
+    </div>
+</dx-data-grid>
