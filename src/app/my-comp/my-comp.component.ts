@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import CustomStore from 'devextreme/data/custom_store';
-import { Service, Employee } from './my-comp.service';
+import { Service, Employee, Task } from './my-comp.service';
 
 @Component({
   selector: 'my-comp',
@@ -11,16 +11,26 @@ import { Service, Employee } from './my-comp.service';
 export class MyCompComponent {
   masterDataSource: CustomStore;
   employees: Employee[];
-
-  constructor(service: Service) {
-    this.employees = service.getEmployees();
-    this.masterDataSource = new CustomStore({
-      key: 'ID',
+  detailDataSource: CustomStore;
+  tasks: Task[];
+  key: number;
+  createStore(Source: any, keyName: string): CustomStore {
+    return new CustomStore({
+      key: keyName,
       load: async () => {
         try {
-          return await new Promise((resolve, reject) =>
-            setTimeout(() => resolve(this.employees), 1000)
-          );
+          return await new Promise((resolve, reject) => {
+            if (Source[0].EmployeeID) {
+              return setTimeout(
+                () =>
+                  resolve(
+                    Source.filter((d: any) => d['EmployeeID'] == this.key)
+                  ),
+                1000
+              );
+            }
+            return setTimeout(() => resolve(Source), 1000);
+          });
         } catch (err) {
           throw 'Data loading error';
         }
@@ -29,8 +39,14 @@ export class MyCompComponent {
         try {
           return await new Promise((resolve, reject) =>
             setTimeout(() => {
-              this.employees.push(values);
-              resolve(this.employees);
+              if (!values[keyName]) {
+                values[keyName] = Source[Source.length - 1] + 1;
+              }
+              if (Source[0].EmployeeID && !values.EmployeeID) {
+                values.EmployeeID = this.key;
+              }
+              Source.push(values);
+              resolve(Source);
             }, 1000)
           );
         } catch (err) {
@@ -41,11 +57,11 @@ export class MyCompComponent {
         try {
           return await new Promise((resolve, reject) =>
             setTimeout(() => {
-              const index = this.employees.findIndex(
-                (data) => (data['ID'] || data) == key
+              const index = Source.findIndex(
+                (data: any) => (data[keyName] || data) == key
               );
               if (index > -1) {
-                this.employees.splice(index, 1);
+                Source.splice(index, 1);
                 resolve();
               } else {
                 reject();
@@ -60,14 +76,14 @@ export class MyCompComponent {
         try {
           return await new Promise((resolve, reject) =>
             setTimeout(() => {
-              const index = this.employees.findIndex(
-                (data) => (data['ID'] || data) == key
+              const index = Source.findIndex(
+                (data: any) => (data[keyName] || data) == key
               );
               if (index > -1) {
                 Object.keys(values).forEach((v: string) => {
-                  this.employees[index][v] = values[v];
+                  Source[index][v] = values[v];
                 });
-                resolve(this.employees);
+                resolve(Source);
               } else {
                 reject();
               }
@@ -78,5 +94,18 @@ export class MyCompComponent {
         }
       },
     });
+  }
+  constructor(service: Service) {
+    this.employees = service.getEmployees();
+    this.masterDataSource = this.createStore(this.employees, 'ID');
+    this.tasks = service.getTasks();
+    this.detailDataSource = this.createStore(this.tasks, 'ID');
+  }
+
+  onRowExpanding(e: any) {
+    this.key = e.key;
+  }
+  completedValue(rowData: any) {
+    return rowData.Status == 'Completed';
   }
 }

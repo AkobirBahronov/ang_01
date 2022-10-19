@@ -20,8 +20,6 @@ export class Task {
   [key: string]: any;
 }
 
-var obj: { [k: string]: any } = {};
-
 const tasks: Task[] = [
   {
     ID: 1,
