@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { DxDataGridComponent, DxPopupComponent } from 'devextreme-angular';
 import CustomStore from 'devextreme/data/custom_store';
-import { Service, Employee, Task } from './data-grid.service';
+import { Service, Employee } from './data-grid.service';
 
 @Component({
   selector: 'data-grid',
@@ -9,26 +10,67 @@ import { Service, Employee, Task } from './data-grid.service';
   providers: [Service],
 })
 export class DataGridComponent {
-  masterDataSource: CustomStore;
+  gridDataSource: CustomStore;
   employees: Employee[];
-  detailDataSource: CustomStore;
-  tasks: Task[];
-  key: number;
+  formInstance: any;
+  saveBtnOptions: any;
+  cancelBtnOptions: any;
+
+  @ViewChild('popup', { static: false }) popup: DxPopupComponent;
+  @ViewChild('dataGrid', { static: false }) dataGrid: DxDataGridComponent;
+
+  constructor(service: Service) {
+    this.employees = service.getEmployees();
+    this.gridDataSource = this.createStore(this.employees, 'ID');
+    this.saveBtnOptions = {
+      text: 'Save',
+      type: 'default',
+      onClick: this.onSave.bind(this),
+    };
+    this.cancelBtnOptions = {
+      text: 'Cancel',
+      type: 'danger',
+      onClick: () => this.popup.instance.hide(),
+    };
+  }
+  editHandler(options: any) {
+    this.popup.instance.show();
+    this.formInstance.updateData(options.data);
+  }
+  onFormInitialized(e: any) {
+    this.formInstance = e.component;
+  }
+  onSave() {
+    const employeeData = this.formInstance.option('formData');
+    if (employeeData.ID) {
+      this.gridDataSource
+        .update(employeeData.ID, employeeData)
+        .then(() => this.dataGrid.instance.refresh())
+        .catch((error) => {
+          throw error;
+        });
+    } else {
+      this.gridDataSource
+        .insert(employeeData)
+        .then(() => this.dataGrid.instance.refresh())
+        .catch((error) => {
+          throw error;
+        });
+    }
+    this.popup.instance.hide();
+  }
+  onAddItem(e: any) {
+    this.popup.instance.show();
+    this.formInstance.option({
+      formData: null,
+    });
+  }
   createStore(Source: any, keyName: string): CustomStore {
     return new CustomStore({
       key: keyName,
       load: async () => {
         try {
           return await new Promise((resolve, reject) => {
-            if (Source[0].EmployeeID) {
-              return setTimeout(
-                () =>
-                  resolve(
-                    Source.filter((d: any) => d['EmployeeID'] == this.key)
-                  ),
-                1000
-              );
-            }
             return setTimeout(() => resolve(Source), 1000);
           });
         } catch (err) {
@@ -41,9 +83,6 @@ export class DataGridComponent {
             setTimeout(() => {
               if (!values[keyName]) {
                 values[keyName] = Source[Source.length - 1] + 1;
-              }
-              if (Source[0].EmployeeID && !values.EmployeeID) {
-                values.EmployeeID = this.key;
               }
               Source.push(values);
               resolve(Source);
@@ -94,18 +133,5 @@ export class DataGridComponent {
         }
       },
     });
-  }
-  constructor(service: Service) {
-    this.employees = service.getEmployees();
-    this.masterDataSource = this.createStore(this.employees, 'ID');
-    this.tasks = service.getTasks();
-    this.detailDataSource = this.createStore(this.tasks, 'ID');
-  }
-
-  onRowExpanding(e: any) {
-    this.key = e.key;
-  }
-  completedValue(rowData: any) {
-    return rowData.Status == 'Completed';
   }
 }

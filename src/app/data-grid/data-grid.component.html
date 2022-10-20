@@ -1,26 +1,30 @@
-<dx-data-grid id="gridContainer" [dataSource]="masterDataSource" [showBorders]="true"
-    (onRowExpanding)="onRowExpanding($event)">
+<dx-button text="Add New" (onClick)="onAddItem($event)"> </dx-button>
+<dx-data-grid #dataGrid [dataSource]="gridDataSource" [showBorders]="true">
     <dxi-column dataField="Prefix" [width]="70" caption="Title"></dxi-column>
     <dxi-column dataField="FirstName"></dxi-column>
     <dxi-column dataField="LastName"></dxi-column>
     <dxi-column dataField="Position" [width]="170"></dxi-column>
     <dxi-column dataField="State" [width]="125"></dxi-column>
     <dxi-column dataField="BirthDate" dataType="date"></dxi-column>
-    <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
-    </dxo-editing>
-    <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
-    <div *dxTemplate="let employee of 'detail'">
-        <div class="master-detail-caption">{{
-            employee.data.FirstName + " " + employee.data.LastName + "'s Tasks:"
-            }}</div>
-        <dx-data-grid [dataSource]="detailDataSource" [showBorders]="true" [columnAutoWidth]="true">
-            <dxi-column dataField="Subject" dataType="string"></dxi-column>
-            <dxi-column dataField="StartDate" dataType="date"></dxi-column>
-            <dxi-column dataField="DueDate" dataType="date"></dxi-column>
-            <dxi-column dataField="Priority" dataType="string"></dxi-column>
-            <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
-            </dxo-editing>
-            <dxi-column caption="Completed" dataType="boolean" [calculateCellValue]="completedValue"></dxi-column>
-        </dx-data-grid>
+    <dxi-column cellTemplate="cellTemplate"></dxi-column>
+    <div *dxTemplate="let t of 'cellTemplate'">
+        <dx-button text="Edit" [width]="100" (onClick)="editHandler(t)"></dx-button>
     </div>
 </dx-data-grid>
+
+<dx-popup #popup [visible]="false" [showTitle]="false" [hideOnOutsideClick]="true">
+    <div *dxTemplate="let data of 'content'">
+        <dx-form id="form" [colCount]="2" [formData]="null" (onInitialized)="onFormInitialized($event)">
+            <dxi-item dataField="Prefix"></dxi-item>
+            <dxi-item dataField="FirstName"></dxi-item>
+            <dxi-item dataField="LastName"></dxi-item>
+            <dxi-item dataField="Position"></dxi-item>
+            <dxi-item dataField="State"></dxi-item>
+            <dxi-item dataField="BirthDate" editorType="dxDateBox"></dxi-item>
+            <dxi-item itemType="group" [colCount]='3' [width]='300'>
+                <dxi-item itemType="button" horizontalAlignment='left' [buttonOptions]="saveBtnOptions"></dxi-item>
+                <dxi-item itemType="button" horizontalAlignment='left' [buttonOptions]="cancelBtnOptions"></dxi-item>
+            </dxi-item>
+        </dx-form>
+    </div>
+</dx-popup>
