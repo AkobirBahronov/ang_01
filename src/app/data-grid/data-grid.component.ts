@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import CustomStore from 'devextreme/data/custom_store';
-import { Service, Employee, Task } from './my-comp.service';
+import { Service, Employee, Task } from './data-grid.service';
 
 @Component({
-  selector: 'my-comp',
-  templateUrl: './my-comp.component.html',
-  styleUrls: ['./my-comp.component.css'],
+  selector: 'data-grid',
+  templateUrl: './data-grid.component.html',
+  styleUrls: ['./data-grid.component.css'],
   providers: [Service],
 })
-export class MyCompComponent {
+export class DataGridComponent {
   masterDataSource: CustomStore;
   employees: Employee[];
   detailDataSource: CustomStore;

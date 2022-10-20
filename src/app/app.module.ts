@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import {
   DxButtonModule,
+  DxChartModule,
   DxCheckBoxModule,
   DxDataGridModule,
   DxFormModule,
@@ -14,11 +15,17 @@ import {
 } from 'devextreme-angular';
 
 import { AppComponent } from './app.component';
-import { MyCompComponent } from './my-comp/my-comp.component';
+import { DataGridComponent } from './data-grid/data-grid.component';
 import { DetailGridComponent } from './detail-grid/detail-grid.component';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
-  declarations: [AppComponent, MyCompComponent, DetailGridComponent],
+  declarations: [
+    AppComponent,
+    DataGridComponent,
+    DetailGridComponent,
+    ChartComponent,
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -31,6 +38,7 @@ import { DetailGridComponent } from './detail-grid/detail-grid.component';
     DxFormModule,
     DxTemplateModule,
     DxDataGridModule,
+    DxChartModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

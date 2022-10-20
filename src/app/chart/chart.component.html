@@ -1,0 +1,13 @@
+<dx-chart id="chart" title="World Population by Decade" [dataSource]="dataSource" (onPointClick)='onPointClick($event)'>
+    <dxo-legend [visible]="false"></dxo-legend>
+    <dxi-series type="bar" argumentField="CategoryName" valueField='ProductCount' name='Categories' color="#5ba5ff">
+    </dxi-series>
+</dx-chart>
+
+<dx-popup #popup [visible]="false" [showTitle]="true" [hideOnOutsideClick]="true">
+    <div *dxTemplate="let data of 'content'">
+        <dx-data-grid #dataGrid [dataSource]="[]" keyExpr="ProductID" (onInitialized)="onGridInitialized($event)"
+            [columns]="gridColumns" [showBorders]="true">
+        </dx-data-grid>
+    </div>
+</dx-popup>
