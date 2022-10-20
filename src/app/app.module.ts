@@ -6,9 +6,11 @@ import {
   DxChartModule,
   DxCheckBoxModule,
   DxDataGridModule,
+  DxDropDownBoxModule,
   DxFormModule,
   DxPivotGridModule,
   DxPopupModule,
+  DxSchedulerModule,
   DxSelectBoxModule,
   DxTemplateModule,
   DxTextBoxModule,
@@ -20,6 +22,7 @@ import { DataGridComponent } from './data-grid/data-grid.component';
 import { DetailGridComponent } from './detail-grid/detail-grid.component';
 import { ChartComponent } from './chart/chart.component';
 import { PivotGridComponent } from './pivot-grid/pivot-grid.component';
+import { SchedulerComponent } from './scheduler/scheduler.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { PivotGridComponent } from './pivot-grid/pivot-grid.component';
     DetailGridComponent,
     ChartComponent,
     PivotGridComponent,
+    SchedulerComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +47,8 @@ import { PivotGridComponent } from './pivot-grid/pivot-grid.component';
     DxDataGridModule,
     DxChartModule,
     DxPivotGridModule,
+    DxSchedulerModule,
+    DxDropDownBoxModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
