@@ -1,0 +1,10 @@
+<dx-chart #stackedBarChart>
+    <dxo-common-series-settings type="stackedBar"></dxo-common-series-settings>
+</dx-chart>
+
+<dx-pivot-grid #pivotGrid [allowSortingBySummary]="true" [allowSorting]="true" [allowFiltering]="true"
+    [allowExpandAll]="true" [height]="440" [showBorders]="true" [dataSource]="dataSource"
+    [showColumnGrandTotals]='false' [showRowGrandTotals]='true'>
+    <!-- We can change showRowGrandTotals to true for task 1 -->
+    <dxo-field-chooser [enabled]="true"></dxo-field-chooser>
+</dx-pivot-grid>

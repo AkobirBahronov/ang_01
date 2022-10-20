@@ -7,6 +7,7 @@ import {
   DxCheckBoxModule,
   DxDataGridModule,
   DxFormModule,
+  DxPivotGridModule,
   DxPopupModule,
   DxSelectBoxModule,
   DxTemplateModule,
@@ -18,6 +19,7 @@ import { AppComponent } from './app.component';
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { DetailGridComponent } from './detail-grid/detail-grid.component';
 import { ChartComponent } from './chart/chart.component';
+import { PivotGridComponent } from './pivot-grid/pivot-grid.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { ChartComponent } from './chart/chart.component';
     DataGridComponent,
     DetailGridComponent,
     ChartComponent,
+    PivotGridComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { ChartComponent } from './chart/chart.component';
     DxTemplateModule,
     DxDataGridModule,
     DxChartModule,
+    DxPivotGridModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
